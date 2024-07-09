@@ -197,7 +197,7 @@ jobs:
           release_name: domains
           tag: domains
           overwrite: true
-          body: "[Clash](https://github.com/Dreamacro/clash) 配置文件"
+          body: "域名列表文件"
           file_glob: true
           file: ./domains/*
 
