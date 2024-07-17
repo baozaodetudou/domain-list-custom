@@ -148,6 +148,10 @@ jobs:
         run: |
           curl -sSL ${bilibili} | grep -Ev '#|IP-' | sed '/^\s*$/d' | sort --ignore-case > ./domains/bilibili.list
 
+      - name: Generate pt
+        run: |
+          curl -sSL ${pt} | grep -Ev '#|IP-' | sed '/^\s*$/d' | sort --ignore-case > ./domains/pt.list
+
       - name: Generate ai
         run: |
           curl -sSL ${ai1} | grep -Ev '#|IP-' | sed '/^\s*$/d' > ./tmp/temp-ai.txt
@@ -178,12 +182,6 @@ jobs:
           sed -e 's/^full:/DOMAIN,/' -e 's/^domain:/DOMAIN-SUFFIX,/' -e 's/^keyword:/DOMAIN-KEYWORD,/' -e 's/^regexp:/DOMAIN-REGEX,/' -e 's/:@cn$//' ./publish/cn.txt > ./tmp/temp-cn.txt
           curl -sSL ${cn} | grep -Ev '#|IP-' | sed '/^\s*$/d' >> ./tmp/temp-cn.txt
           sort --ignore-case -u ./tmp/temp-cn.txt > ./domains/cn.list
-
-      - name: Generate pt
-        run: |
-          sed -e 's/^full:/DOMAIN,/' -e 's/^domain:/DOMAIN-SUFFIX,/' -e 's/^keyword:/DOMAIN-KEYWORD,/' -e 's/^regexp:/DOMAIN-REGEX,/' -e 's/:@cn$//' ./publish/cn.txt > ./tmp/temp-pt.txt
-          curl -sSL ${pt} | grep -Ev '#|IP-' | sed '/^\s*$/d' >> ./tmp/temp-pt.txt
-          sort --ignore-case -u ./tmp/temp-pt.txt > ./domains/pt.list
           rm -rf ./tmp* ./publish*
 
       - name: Release and upload `clash` assets
